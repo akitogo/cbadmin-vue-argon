@@ -28,6 +28,7 @@ import ToastService from 'primevue/toastservice'
 Vue.config.productionTip = false
 
 Vue.use(VueI18n)
+Vue.use(ArgonDashboard)
 Vue.use(PrimeVue)
 Vue.use(ToastService)
 

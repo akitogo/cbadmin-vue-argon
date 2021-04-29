@@ -64,7 +64,7 @@ export const cbadminRoutes = {
         }
       ]
     },
-    'permissiongroup':
+  'permissiongroup':
     {
       path: '/permissiongroup',
       component: DashboardLayout,
@@ -110,5 +110,5 @@ export const cbadminRoutes = {
     },
   'default':
     // otherwise redirect to home
-    { path: '*', redirect: '/' }
+    { path: '*', redirect: '/login' }
 };

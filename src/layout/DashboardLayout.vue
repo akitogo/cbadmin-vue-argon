@@ -1,10 +1,6 @@
 <template>
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
-    <side-bar
-      :background-color="sidebarBackground"
-      short-title="Argon"
-      title="Argon"
-    >
+    <side-bar :background-color="sidebarBackground" short-title="Argon" title="Argon">
       <template slot="links">
         <sidebar-item v-for="(link,idx) in $data.items" :link="link" :key="idx"/>
       </template>
@@ -13,7 +9,6 @@
       <Toast position="top-right" />
       <overlay ref="overlay"></overlay>
       <dashboard-navbar @evtOverlayAddItem="overlayAddItem" @evtOverlayRemoveItem="overlayRemoveItem"></dashboard-navbar>
-
       <div @click="toggleSidebar">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -42,41 +37,6 @@
     data() {
       return {
         items: [ ] // will be filled by remote call
-        ,itemsTest: [
-          {
-            icon: 'pi pi-fw pi-image',
-            label: 'Assets (test)',
-            //expanded: true,
-            items: [
-              {
-                icon: 'pi pi-fw pi-search',
-                label: 'Search (test)',
-                to: '/search'
-              },
-              {
-                icon: 'pi pi-fw pi-cloud-upload',
-                label: 'Upload (test)',
-                to: '/upload'
-              },
-              {
-                icon: 'pi pi-fw pi-sitemap',
-                label: 'Categories (test)',
-                to: '/treeview'
-              }
-            ]
-          },
-          {
-            icon: 'pi pi-fw pi-user',
-            label: 'Users (test)',
-            items: [
-              {
-                icon: 'pi pi-fw pi-user',
-                label: 'User search (test)',
-                to: '/list'
-              }
-            ]
-          }
-        ]
         ,sidebarBackground: 'vue' //vue|blue|orange|green|red|primary
       };
     },
@@ -109,8 +69,7 @@
            }
         });
       }
-    }
-    ,
+    },
     methods: {
       expandMenu(menuItems) {
         // If the current route path is in any child element, expand all parents.
@@ -143,7 +102,6 @@
         }
       }
     }
-
   };
 </script>
 <style lang="scss">
