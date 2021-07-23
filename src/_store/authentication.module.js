@@ -10,15 +10,14 @@ export const authentication = {
             commit('loginRequest', { username });
 
             userService.login(username, password)
-                .then(
-                    user => {
-                        commit('loginSuccess', user);
-                    },
-                    error => {
-                        commit('loginFailure', error);
-                        /* dispatch('alert/error', error, { root: true }); */
+                .then(response => {
+                    if (response.error) {
+                        commit('loginFailure', response.messages.join('. '));
+                        //dispatch('alert/error', error, { root: true });
+                    } else {
+                        commit('loginSuccess', response.data);
                     }
-                );
+                });
         },
         logout({ commit }) {
             commit('logout');
@@ -48,7 +47,7 @@ export const authentication = {
         resetPassword(state) {
             state.status = {};
             state.user = null;
-        },        
+        },
         logout(state) {
             state.status = {};
             state.user = null;

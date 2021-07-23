@@ -34,7 +34,7 @@ function login(username, password)
                 store.dispatch('setUser', response.data);
             }
 
-            return response.data;
+            return response;
         });
         /*
         .then(data => {
