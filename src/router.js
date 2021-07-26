@@ -22,6 +22,11 @@ export const cbadminRoutes = {
           path: 'list',
           name: 'userlist',
           component: () => import('./views/User/List.vue')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('./views/Profile.vue')
         }
       ]
     },
@@ -92,17 +97,17 @@ export const cbadminRoutes = {
       component: AuthLayout,
       children: [
         {
-          path: '/login',
+          path: 'login',
           name: 'login',
           component: () => import(/* webpackChunkName: "auth" */ './views/Auth/Login.vue')
         },
         {
-          path: '/reset',
+          path: 'reset',
           name: 'reset',
           component: () => import(/* webpackChunkName: "auth" */ './views/Auth/Reset.vue')
         },
         {
-          path: '/register',
+          path: 'register',
           name: 'register',
           component: () => import(/* webpackChunkName: "auth" */ './views/Auth/Register.vue')
         }

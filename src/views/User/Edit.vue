@@ -88,7 +88,7 @@
   </div>
 </template>
 <script>
-  import { userService,roleService,languageService,permissiongroupService } from '../../_services';
+  import { userService, roleService, languageService, permissiongroupService } from '../../_services';
   import Dropdown from 'primevue/dropdown'
   import InputSwitch from 'primevue/inputswitch'
   import MultiSelect from 'primevue/multiselect'
