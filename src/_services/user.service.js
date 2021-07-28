@@ -56,7 +56,7 @@ function reset(firstname, lastname,email)
     return fetch('/cbadmin/auth/reset', requestOptions)
         .then(ajaxResponseHandler.handleResponse)
         .then(response => {
-            return response.data;
+            return response;
         });
 }
 

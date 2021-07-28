@@ -25,11 +25,26 @@ export const authentication = {
         register({ commit }, { firstname, lastname, email ,password }) {
             userService.register(firstname, lastname, email ,password);
             commit('logout');
-        },        
+        },
         reset({ commit } , { firstname, lastname, email }) {
-            userService.reset(firstname, lastname, email);
-            commit('resetPassword');
-        }        
+            if (!firstname || !lastname || !email) {
+                commit('resetPasswordError', 'All fields are required.');
+                return;
+            }
+            commit('resetPasswordStart');
+            userService.reset(firstname, lastname, email)
+                .then(response => {
+                    console.log(response);
+                    if (response.error) {
+                        // error
+                        commit('resetPasswordError', response.messages.join('. '));
+                    } else {
+                        // success
+                        commit('resetPasswordSuccess', response.messages.join('. '));
+                    }
+                    //commit('resetPasswordReset');
+                });
+        }
     },
     mutations: {
         loginRequest(state, user) {
@@ -44,7 +59,19 @@ export const authentication = {
             state.status = { loginError: error };
             state.user = null;
         },
-        resetPassword(state) {
+        resetPasswordStart(state) {
+            state.status = { resetSent: true };
+            state.user = null;
+        },
+        resetPasswordError(state, error) {
+            state.status = { resetError: error};
+            state.user = null;
+        },
+        resetPasswordSuccess(state, successMsg) {
+            state.status = { resetSuccess: successMsg};
+            state.user = null;
+        },
+        resetPasswordReset(state) {
             state.status = {};
             state.user = null;
         },

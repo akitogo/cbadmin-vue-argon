@@ -21,7 +21,10 @@
                         <div class="text-center text-muted mb-4">
                             <small>Please provide the following information to receive a password reset email.</small>
                         </div>
-                        <form role="form" @submit.prevent="handleSubmit" action="/#/profile">
+                        <form role="form" @submit.prevent="handleSubmit">
+                            <div class="text-center" v-if="resetSuccess">
+                                <p class="alert alert-success">{{ resetSuccess }}</p>
+                            </div>
                             <base-input class="input-group-alternative mb-3"
                                         placeholder="Firstname"
                                         addon-left-icon="ni ni-single-02"
@@ -37,10 +40,8 @@
                                         addon-left-icon="ni ni-email-83"
                                         v-model="email">
                             </base-input>
-
-
                             <div class="text-center" v-if="resetError">
-                                <p class="error mt-4 mb-0">{{ resetError }} {{  this.$i18n.t('sidebarNav.client') }}</p>
+                                <p class="alert alert-danger mt-4 mb-0">{{ resetError }}</p>
                             </div>
                             <div class="text-center">
                                 <button class="my-4 btn btn-primary" :disabled="resetSent">Receive Password Reset</button>
@@ -67,10 +68,12 @@
           firstname: "",
           lastname: "",
           email: "",
-          submitted: false
       }
     },
     computed: {
+        resetSuccess () {
+            return this.$store.state.authentication.status.resetSuccess;
+        },
         resetError () {
             return this.$store.state.authentication.status.resetError;
         },
@@ -80,13 +83,9 @@
     },
     methods: {
         handleSubmit () {
-            this.submitted = true;
             const { firstname,lastname, email } = this;
             const { dispatch } = this.$store;
-
-            if (firstname && lastname && email) {
-                dispatch('authentication/reset', { firstname,lastname,email });
-            }
+            dispatch('authentication/reset', { firstname,lastname,email });
         }
     }
   }
