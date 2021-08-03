@@ -6,8 +6,10 @@ export const userService = {
   login,
   logout,
   register,
+  activateAccount,
   reset,
-  checkResetToken,
+  checkPasswordResetToken,
+  checkAccountActivationToken,
   setNewPassword,
   list,
   getUser,
@@ -65,9 +67,9 @@ function reset(firstname, lastname, email)
 }
 
 /**
- * Validate the reset token if it can be used.
+ * Validate the password reset token if it can be used.
  */
-function checkResetToken(token)
+function checkPasswordResetToken(token)
 {
   const requestOptions = {
     method: 'POST',
@@ -75,13 +77,31 @@ function checkResetToken(token)
     body: JSON.stringify({ token })
   };
 
-  return fetch('/cbadmin/auth/checkToken', requestOptions)
+  return fetch('/cbadmin/auth/checkPasswordResetToken', requestOptions)
     .then(ajaxResponseHandler.handleResponse)
     .then(response => {
       return response;
     });
 }
 
+/**
+ * Validate the account activation token if it can be used.
+ */
+ function checkAccountActivationToken(token)
+ {
+   const requestOptions = {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ token })
+   };
+ 
+   return fetch('/cbadmin/auth/checkAccountActivationToken', requestOptions)
+     .then(ajaxResponseHandler.handleResponse)
+     .then(response => {
+       return response;
+     });
+ }
+ 
 /**
  * Make ajax call to set the new password.
  */
@@ -155,6 +175,24 @@ function register(userData)
     body: JSON.stringify(userData)
   };
   return fetch('/cbadmin/auth/register', requestOptions)
+    .then(ajaxResponseHandler.handleResponse)
+    .then(response => {
+      return response;
+    });
+}
+
+/**
+ * Try to activate user's account with passed token.
+ */
+function activateAccount(token)
+{
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token })
+  };
+
+  return fetch('/cbadmin/auth/activateAccount', requestOptions)
     .then(ajaxResponseHandler.handleResponse)
     .then(response => {
       return response;

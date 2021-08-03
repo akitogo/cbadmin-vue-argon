@@ -1,10 +1,23 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-lg-5 col-md-7">
-      <div class="card bg-secondary shadow border-0">
+      <div v-if="token" class="card bg-secondary shadow border-0">
         <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center" v-if="activationSuccess">
+            <p class="alert alert-success">{{ activationSuccess }}</p>
+          </div>
           <div class="text-center text-muted mb-4">
-            <small>Or sign up with credentials</small>
+            <small>Checking account activation token...</small>
+          </div>
+          <div class="text-center" v-if="activationError">
+            <p class="alert alert-danger mt-4 mb-0">{{ activationError }}</p>
+          </div>
+        </div>
+      </div>
+      <div v-if="!token" class="card bg-secondary shadow border-0">
+        <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center" v-if="registrationSuccess">
+            <p class="alert alert-success">{{ registrationSuccess }}</p>
           </div>
           <form role="form" @submit.prevent="handleSubmit">
             <base-input class="input-group-alternative mb-3"
@@ -45,7 +58,7 @@
               </div>
             </div>
             <div class="text-center">
-                <button class="my-4 btn btn-primary">Create Account</button>
+                <button class="my-4 btn btn-primary" :disabled="registrationRunning">Create Account</button>
             </div>
           </form>
         </div>
@@ -74,18 +87,43 @@
     components: { Password },
     data() {
       return {
+        token: this.$route.query.token,
+        registrationRunning: false,
+        activationSuccess: "",
+        activationError: "",
+        registrationSuccess: "",
+        userModel: {
+          firstname: 'test1',
+          lastname: 'test2',
+          email: 'sm+' + Date.now() + '@akitogo.com',
+          password: 'test'
+        },
         errors: {
           firstname:  {valid: undefined, error: '' },
           lastname:   {valid: undefined, error: '' },
           email:      {valid: undefined, error: '' },
           password:   {valid: undefined, error: '' }
-        },
-        userModel: {
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: ''
         }
+      }
+    },
+    mounted() {
+      // If there is a token, try to activate the new account.
+      if (this.token != undefined) {
+        userService.checkAccountActivationToken(this.token)
+          .then(response => {
+            if (response.error) {
+              this.activationError = response.messages.join('. ');
+            } else {
+              userService.activateAccount(this.token)
+                .then(response => {
+                  if (response.error) {
+                    this.activationError = response.messages.join('. ');
+                  } else {
+                    this.activationSuccess = response.messages.join('. ');
+                  }
+                })
+            }
+          });
       }
     },
     methods: {
@@ -95,11 +133,16 @@
         }, this);
       },
       handleSubmit () {
+        this.registrationSuccess = "";
+        this.registrationRunning = true;
         userService.register(this.userModel)
           .then(response => {
             this.resetErrors();
             if (response.error) {
               this.errors = { ...this.errors, ...response.data }
+              this.registrationRunning = false;
+            } else {
+              this.registrationSuccess = response.data;
             }
           });
       }

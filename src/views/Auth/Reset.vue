@@ -31,7 +31,7 @@
           </form>
         </div>
       </div>
-      <div  v-if="!token" class="card bg-secondary shadow border-0">
+      <div v-if="!token" class="card bg-secondary shadow border-0">
         <!--
         <div class="card-header bg-transparent pb-5">
           <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
@@ -122,7 +122,7 @@
     mounted() {
       if (this.token != undefined) {
         // check if token is valid; show error message on error; otherwise do nothing, let the user enter a new password;
-        userService.checkResetToken(this.token)
+        userService.checkPasswordResetToken(this.token)
           .then(response => {
             if (response.error) {
               this.newPasswordError = response.messages.join('. ');
