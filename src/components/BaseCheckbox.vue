@@ -11,6 +11,11 @@
         <span v-if="inline">&nbsp;</span>
       </slot>
     </label>
+    <slot name="helpBlock">
+      <div class="text-danger invalid-feedback" style="display: block;" v-if="error">
+        {{ error }}
+      </div>
+    </slot>
   </div>
 </template>
 <script>
@@ -33,7 +38,16 @@ export default {
     inline: {
       type: Boolean,
       description: "Whether checkbox is inline"
-    }
+    },
+    valid: {
+      type: Boolean,
+      description: "Whether is valid",
+      default: undefined
+    },
+    error: {
+      type: String,
+      description: "Input error (below input)"
+    },
   },
   data() {
     return {

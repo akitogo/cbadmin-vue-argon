@@ -7,7 +7,7 @@ module.exports = {
     host: '127.0.0.1',
 
     proxy: {
-      "^(\/(cbadmin|akibasedam))?\/(api|auth)\/*": {
+      "^(\/(cbadmin|akibasedam))?\/(api|auth|config)\/*": {
         target: process.env.VUE_APP_DEV_API_HOST,
         changeOrigin: true,
         secure: false,

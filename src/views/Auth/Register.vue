@@ -50,15 +50,18 @@
                   v-model="userModel.password">
             </base-input>
             <password v-model="userModel.password" :strength-meter-only="true"/>
-            <div class="row my-4">
+            <div class="row my-4" v-if="isPrivacyPolicyRequired">
               <div class="col-12">
-                <base-checkbox class="custom-control-alternative">
-                  <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                <base-checkbox class="custom-control-alternative"
+                  v-model="userModel.acceptPrivacyPolicy"
+                  :valid="errors.acceptPrivacyPolicy.valid"
+                  :error="errors.acceptPrivacyPolicy.error">
+                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
                 </base-checkbox>
               </div>
             </div>
             <div class="text-center">
-                <button class="my-4 btn btn-primary" :disabled="registrationRunning">Create Account</button>
+                <button class="my-4 btn btn-primary" :disabled="!isRegistrationPossible">Create Account</button>
             </div>
           </form>
         </div>
@@ -79,7 +82,7 @@
   </div>
 </template>
 <script>
-  import { userService } from '../../_services';
+  import { userService, configService } from '../../_services';
   import Password from 'vue-password-strength-meter'
 
   export default {
@@ -89,6 +92,8 @@
       return {
         token: this.$route.query.token,
         registrationRunning: false,
+        isPrivacyPolicyRequired: false,
+        configLoaded: false,
         activationSuccess: "",
         activationError: "",
         registrationSuccess: "",
@@ -96,14 +101,24 @@
           firstname: 'test1',
           lastname: 'test2',
           email: 'sm+' + Date.now() + '@akitogo.com',
-          password: 'test'
+          password: 'test',
+          acceptPrivacyPolicy: false,
         },
         errors: {
-          firstname:  {valid: undefined, error: '' },
-          lastname:   {valid: undefined, error: '' },
-          email:      {valid: undefined, error: '' },
-          password:   {valid: undefined, error: '' }
+          firstname:             { valid: undefined, error: '' }
+          , lastname:            { valid: undefined, error: '' }
+          , email:               { valid: undefined, error: '' }
+          , password:            { valid: undefined, error: '' }
+          , acceptPrivacyPolicy: { valid: undefined, error: '' }
         }
+      }
+    },
+    computed: {
+      isRegistrationPossible() {
+        if (this.registrationRunning || !this.configLoaded) {
+          return false;
+        }
+        return true;
       }
     },
     mounted() {
@@ -123,6 +138,14 @@
                   }
                 })
             }
+          });
+      } else {
+        // This is a regular registration page, so load the config first
+        // to determine if privacy policy consent is required.
+        configService.get()
+          .then(response => {
+            this.isPrivacyPolicyRequired = response.data.registration.privacyPolicyRequired;
+            this.configLoaded = true;
           });
       }
     },
