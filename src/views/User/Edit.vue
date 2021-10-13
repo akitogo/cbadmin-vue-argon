@@ -177,7 +177,9 @@
         if (this.userModel.language.code) {
           this.userModel.language.languageId = this.userModel.language.code;
         }
-        userService.save(this.userModel)
+        var userModelToSave = { ...this.userModel };
+        userModelToSave.permissionGroups = userModelToSave.permissionGroups.map(pg => { return pg.permissionGroupId });
+        userService.save(userModelToSave)
           .then(response => {
             this.resetErrors();
             if (response.error) {
