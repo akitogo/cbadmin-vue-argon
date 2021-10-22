@@ -1,0 +1,30 @@
+{
+  "name":"cbadmin-vue-argon",
+  "version":"0.0.1",
+  "author":"Akitogo Internet and Media Applications GmbH <info@akitogo.com>",
+  "slug":"cbadmin-vue-argon",
+  "type":"modules",
+  "homepage":"https://github.com/akitogo/cbadmin-vue-argon",
+  "documentation":"",
+  "repository":{
+      "type":"github",
+      "URL":"https://github.com/akitogo/cbadmin-vue-argon"
+  },
+  "shortDescription":"This module is a vue-based UI implementation for the cbadmin extension.",
+  "license":[
+      {
+          "type":"Apache2",
+          "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+  ],
+  "contributors":[
+      "Gunnar Lieb <gl@akitogo.com>",
+      "Slawomir Magdziarz <sm@akitogo.com>"
+  ],
+  "ignore":[
+  ],
+  "dependencies":{
+  },
+  "installPaths":{
+  }
+}
