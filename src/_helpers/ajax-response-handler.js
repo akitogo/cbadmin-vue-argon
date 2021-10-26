@@ -13,7 +13,7 @@ function handleResponse(response)
 
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      const error = (data && data.message) || response.statusText;
+      //const error = (data && data.message) || response.statusText;
       if (response.status === 401) {
         store.dispatch('authentication/logout');
       }

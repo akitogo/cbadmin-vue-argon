@@ -64,7 +64,7 @@
         },
     },
     watch: {
-        loggedIn: function(newValue, oldValue) {
+        loggedIn: function(newValue) {
             if (newValue == true) {
                 this.$router.push('/dashboard');
             }

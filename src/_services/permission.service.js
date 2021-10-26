@@ -1,6 +1,5 @@
 import { ajaxResponseHandler } from '../_helpers'
 import { authHeader } from '../_helpers'
-import { store } from '../_store'
 
 export const permissionService = {
     list,

@@ -46,10 +46,10 @@
       },
     },
     watch: {
-      loggedIn: function(newValue, oldValue) {
-          if (!newValue) {
-              this.$router.push('/login');
-          }
+      loggedIn: function(newValue) {
+        if (!newValue) {
+          this.$router.push('/login');
+        }
       }
     },
     mounted() {

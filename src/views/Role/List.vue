@@ -117,7 +117,6 @@
             this.deleteDialog = true;
         },
         deleteRole() {
-          var roleName = this.role.role;
           roleService.remove(this.role.roleId)
             .then(response => {
               this.deleteDialog = false;
