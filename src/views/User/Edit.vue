@@ -193,10 +193,12 @@
       resetPassword() {
         userService.reset(this.userModel.firstName, this.userModel.lastName, this.userModel.email)
           .then(response => {
-            this.$toast.add({severity:'success', summary: 'Password reset', detail: 'User password reset has been initiated.', life: 5000 });
-          })
-          .catch(error => {
-            this.$toast.add({severity:'error', summary: 'Password reset', detail: 'Could not initiate password reset.', life: 5000 });
+            if (response.error) {
+              //this.$toast.add({ severity: 'error', summary: 'Password reset', detail: 'Could not initiate password reset.', life: 5000 });
+              this.$toast.add({ severity: 'error', summary: 'Password reset', detail: response.messages.join('. '), life: 5000 });
+            } else {
+              this.$toast.add({severity:'success', summary: 'Password reset', detail: 'User password reset has been initiated.', life: 5000 });
+            }
           });
       },
       resetErrors() {
