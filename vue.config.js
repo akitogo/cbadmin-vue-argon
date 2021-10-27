@@ -2,7 +2,8 @@ const webpack = require('webpack');
 const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/modules/cbadmin-vue-argon/includes/' : '/',
+  outputDir: 'generated-html',
+  publicPath: process.env.NODE_ENV === 'production' ? '/modules/cbadmin-vue-argon/generated-html/' : '/',
   devServer: {
     host: '127.0.0.1',
 
@@ -25,7 +26,7 @@ module.exports = {
     ]
   },
   pwa: {
-    name: 'Akibase Dam',
+    name: 'cbadmin-vue-argon',
     themeColor: '#172b4d',
     msTileColor: '#172b4d',
     appleMobileWebAppCapable: 'yes',

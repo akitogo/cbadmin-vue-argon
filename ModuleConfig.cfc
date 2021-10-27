@@ -45,7 +45,7 @@
 	this.author 			= "";
 	this.webURL 			= "";
 	this.description 		= "";
-	this.version			= "1.0.0";
+	this.version			= "0.0.2";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -81,6 +81,19 @@
 			defaultLayout = ""
 		};
 
+		routes = [
+			{ pattern="/", handler="vue", action ="index" },
+			{ pattern="/login", handler="vue", action ="index" },
+			{ pattern="/logout", handler="vue", action ="index" },
+			{ pattern="/register", handler="vue", action ="index" },
+			{ pattern="/reset", handler="vue", action ="index" },
+
+			{ pattern="/user", handler="vue", action ="index" },
+			{ pattern="/role", handler="vue", action ="index" },
+			{ pattern="/permission", handler="vue", action ="index" },
+			{ pattern="/permissiongroup", handler="vue", action ="index" },
+		];
+
 		// Custom Declared Points
 		interceptorSettings = {
 			customInterceptionPoints = []
@@ -93,6 +106,7 @@
 		// Binder Mappings
 		// binder.map("Alias").to("#moduleMapping#.models.MyService");
 
+		addTopRoutes('vue');
 	}
 
 	/**
@@ -121,5 +135,37 @@
 			menuService.getNewMenuItem().set( label = "Permission groups", icon = "pi pi-fw pi-user", to ="/permissiongroup/list")
 
 		]);
+	}
+
+	private function addTopRoutes(string routeFilterList )
+	{
+		var routingService= controller.getRoutingService();
+		var parentRoutes  = routingService.getRoutes();
+		var restoreRoutes = [];
+
+		// remove default routes out of routes table
+		// add it later at end
+		routingService.setRoutes(
+			parentRoutes.filter( function( item ){
+				arrayAppend(restoreRoutes, item );
+				return ( item.pattern NEQ ":handler/" AND item.pattern NEQ ":handler/:action/" );
+			} )
+		);
+
+		// add all vue and api routes at end of routing table
+		variables.routes.each( function( item ){
+			// Check if handler defined
+			if( structKeyExists( item, "handler") 
+				&& listFindNoCase(routeFilterList,item.handler) 
+			){
+				item.handler = "#this.entryPoint#:#item.handler#";
+				// add it as main application route.
+				routingService.addRoute( argumentCollection=item );
+			}
+		} );
+		// restore prevoiusly saved routes
+		restoreRoutes.each( function( item ){
+			routingService.addRoute( argumentCollection=item );
+		} );
 	}
 }

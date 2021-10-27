@@ -1,0 +1,1 @@
+<cfinclude template ="/modules/cbadmin-vue-argon/generated-html/index.html">
