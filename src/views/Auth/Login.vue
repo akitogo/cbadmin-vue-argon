@@ -48,8 +48,8 @@
     name: 'login',
     data() {
       return {
-          username: 'slawek',
-          password: 'test',
+          username: '',
+          password: '',
       }
     },
     computed: {

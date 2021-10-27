@@ -98,9 +98,9 @@
     data() {
       return {
         token: this.$route.query.token
-        , firstname: "slawek"
-        , lastname: "akislawek"
-        , email: "sm+123@akitogo.com"
+        , firstname: ""
+        , lastname: ""
+        , email: ""
         , newPassword: ""
         , repeatNewPassword: ""
         , newPasswordSuccess: ''

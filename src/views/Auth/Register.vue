@@ -35,6 +35,13 @@
                   v-model="userModel.lastname">
             </base-input>
             <base-input class="input-group-alternative mb-3"
+                  placeholder="Username"
+                  :valid="errors.username.valid"
+                  :error="errors.username.error"
+                  addon-left-icon="ni ni-hat-3"
+                  v-model="userModel.username">
+            </base-input>
+            <base-input class="input-group-alternative mb-3"
                   placeholder="Email"
                   :valid="errors.email.valid"
                   :error="errors.email.error"
@@ -98,15 +105,17 @@
         activationError: "",
         registrationSuccess: "",
         userModel: {
-          firstname: 'test1',
-          lastname: 'test2',
-          email: 'sm+' + Date.now() + '@akitogo.com',
-          password: 'test',
+          firstname: '',
+          lastname: '',
+          username: '',
+          email: '',
+          password: '',
           acceptPrivacyPolicy: false,
         },
         errors: {
           firstname:             { valid: undefined, error: '' }
           , lastname:            { valid: undefined, error: '' }
+          , username:            { valid: undefined, error: '' }
           , email:               { valid: undefined, error: '' }
           , password:            { valid: undefined, error: '' }
           , acceptPrivacyPolicy: { valid: undefined, error: '' }
