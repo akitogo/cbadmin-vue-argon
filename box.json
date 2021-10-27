@@ -10,7 +10,7 @@
       "type":"github",
       "URL":"https://github.com/akitogo/cbadmin-vue-argon"
   },
-  "shortDescription":"This module is a vue-based UI implementation for the cbadmin extension.",
+  "shortDescription":"A vue-based UI implementation for the cbadmin extension.",
   "license":[
       {
           "type":"Apache2",
