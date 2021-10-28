@@ -1,6 +1,6 @@
 # Welcome to cbadmin-vue-argon
 Cbadmin-vue-argon is a vue-based UI implementation for the cbadmin extension.
-![Cbadmin-vue-argon preview image](https://raw.githubusercontent.com/akitogo/cbadmin-vue-argon/master/public/docs/readme-preview.jpg)
+![Cbadmin-vue-argon preview image](https://raw.githubusercontent.com/akitogo/cbadmin-vue-argon/master/public/docs/readme-preview.png)
 ## License
 Apache License, Version 2.0.
 ## Important Links
