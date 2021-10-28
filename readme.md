@@ -15,7 +15,7 @@ box install cbadmin-vue-argon
 ```
 This will download cbadmin-vue-argon along with all required dependencies.
 ### 3. Restart your server
-After instlaling cbadmin-vue-argon you will need to restart your server:
+After installing cbadmin-vue-argon you will need to restart your server:
 ```
 box server restart
 ```
